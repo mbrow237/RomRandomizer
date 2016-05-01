@@ -9,6 +9,7 @@ import java.awt.event.WindowListener;
 import java.io.IOException;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,10 +20,12 @@ public class mainGUI extends JFrame implements WindowListener,ActionListener {
 	JButton bntRandom;
 	JButton bntLoad;
 	JLabel lblStatus;
+	JFileChooser fileDialog;
 	RecursTest rt = new RecursTest();
+	static mainGUI startWindow;
 	
 	public static void main(String[] args) {  
-		mainGUI startWindow = new mainGUI("Rom Randomizer");
+		startWindow = new mainGUI("Rom Randomizer");
 		startWindow.setSize(350,200);
 		startWindow.setVisible(true);
 		
@@ -60,6 +63,7 @@ public class mainGUI extends JFrame implements WindowListener,ActionListener {
 		bntRandom.setEnabled(false);
 		bntLoad = new JButton("Load");
 		lblStatus = new JLabel("Click Load");
+		fileDialog = new JFileChooser();
 		add(bntLoad);
 		add(bntRandom);
 		add(lblStatus);
@@ -71,10 +75,22 @@ public class mainGUI extends JFrame implements WindowListener,ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
-			lblStatus.setText("Loading ROMS");
-			rt.loadRoms();
-			bntRandom.setEnabled(true);
-			lblStatus.setText("Loading Complete, Click Random");
+			fileDialog.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			int returnVal = fileDialog.showOpenDialog(startWindow);
+			 if (returnVal == JFileChooser.APPROVE_OPTION) {
+				 lblStatus.setText("Loading ROMS");
+				 rt.loadRoms(fileDialog.getSelectedFile().getAbsolutePath());
+				 	if (!rt.checkListIsEmpty())
+				 	{
+				 		bntRandom.setEnabled(true);
+				 		lblStatus.setText("Loading Complete, Click Random");
+				 	}
+				 	else
+				 	{
+				 		bntRandom.setEnabled(false);
+				 		lblStatus.setText("No supported Roms found, choose a different directory");
+				 	}
+			 }
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

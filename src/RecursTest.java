@@ -5,11 +5,12 @@ public class RecursTest
    {
     directoryFind f; 
     File rom = null;
-	
-    public void loadRoms() throws IOException
+	String path;
+    
+    public void loadRoms(String p) throws IOException
       {
             
-            String path = "C://Users//Melvin//Downloads//Roms";
+            path = p;
             File file = new File(path); 
             File rom = null;
             f = new directoryFind();
@@ -45,5 +46,17 @@ public class RecursTest
              
           roms r = new roms();
           r.romExecute(rom);
+      }
+      
+      public boolean checkListIsEmpty()
+      {
+    	  if (f.list.isEmpty())
+    	  {
+    		  return true;
+    	  }
+    	  else
+    	  {
+    		  return false;
+    	  }
       }
 }     

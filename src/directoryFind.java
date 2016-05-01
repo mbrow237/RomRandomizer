@@ -5,11 +5,6 @@ public class directoryFind
 {   
    ArrayList<String> list = new ArrayList<String>();
    
-   /*
-   public enum romType{
-	   GENESIS, SNES, NINTENDOSIXTYFOUR, GAMEGEAR, NES, GB, GBC
-   }
-   */
    public void findAllDirect(File file)
    {
       File[] array = file.listFiles();
@@ -28,6 +23,7 @@ public class directoryFind
          }
       }
    }
+   
    public int randomNum()
    {
       int num = list.size();
@@ -39,6 +35,7 @@ public class directoryFind
    {
       return list.get(n);    
    }
+   
    
    public boolean extensionCheck(String s)
    {
